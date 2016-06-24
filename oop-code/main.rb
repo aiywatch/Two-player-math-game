@@ -39,30 +39,31 @@ def restart?
   false
 end
 
+def start_game
+  welcome()
+  @players = create_users()
 
-welcome()
-@players = create_users()
+  begin
+    show_get_operator()
+    operator = gets.strip.downcase
+    get_start()
 
-begin
-  show_get_operator()
-  operator = gets.strip.downcase
-  get_start()
+    while !game_end?()
 
-  while !game_end?()
+      @players.each do | player |
+        question = Question.new(operator)
+        show_question(question)
+        user_ans = gets.strip.to_i
+        right = check_ans(question, user_ans)
+        player.update_socre(right)
+        show_player_score(player)
+      end
 
-    @players.each do | player |
-      question = Question.new(operator)
-      show_question(question)
-      user_ans = gets.strip.to_i
-      right = check_ans(question, user_ans)
-      player.update_socre(right)
-      show_player_score(player)
     end
 
-  end
+    show_record (@players)
+  end while restart?()
+end
 
-  show_record (@players)
-end while restart?()
-
-
+start_game()
 show_end_game()

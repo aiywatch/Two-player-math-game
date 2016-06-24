@@ -24,7 +24,7 @@ class Question
         opt = 'multiply'
       end
     end
-
+    
     opt
   end
 
