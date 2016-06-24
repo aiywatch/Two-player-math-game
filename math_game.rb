@@ -22,7 +22,7 @@ begin
   while !game_end?
     $players.each_with_index do | player, i |
       print "Player #{i + 1}: "
-      ans = question
+      ans = question()
       ans_user = gets.strip
       check_ans(ans, ans_user, player)
     end

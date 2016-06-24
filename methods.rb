@@ -1,11 +1,21 @@
 p "test methods"
 
+
+MAX_NUMBER = 10
+
+
 def get_name
   
-  (1..2).each do |i|
-    puts "Please enter Player #{i} name ? "
+  # (1..2).each do |i|
+  #   puts "Please enter Player #{i} name ? "
+  #   name = gets.strip
+  #   $players[i - 1][:name] = name unless name.empty?
+  # end
+
+  $players.each_with_index do |player, i|
+    puts "Please enter Player #{i+1} name ? "
     name = gets.strip
-    $players[i - 1][:name] = name unless name == ""
+    player[:name] = name unless name.empty?
   end
 end
 
@@ -14,8 +24,8 @@ def question(opt = "")
   ans = 0
   opt.to_i
   opt = rand(3) if opt == ""
-  operand_1 = rand(10)
-  operand_2 = rand(10)
+  operand_1 = rand(MAX_NUMBER)
+  operand_2 = rand(MAX_NUMBER)
 
   case opt
   when 0
@@ -35,7 +45,7 @@ end
 
 def game_end?
   game_stop = true
-  $players[0][:live] == 0 || $players[1][:live] == 0
+  # $players[0][:live] == 0 || $players[1][:live] == 0
 
   if $players[0][:live] == 0 && $players[1][:live] == 0
     puts "Game draw !".colorize(:color => :light_blue, :background => :red)
@@ -47,11 +57,10 @@ def game_end?
     game_stop = false
   end
 
-
-
   game_stop
 end
 
+# should return true if answer is correct, and return false if not
 def check_ans (ans, ans_user, player)
   if ans == ans_user.to_i
     puts "Right !".green
@@ -65,6 +74,9 @@ end
 
 def really_end?
   puts "Do you want to restart the game ? (yes, no)"
-  command = gets.strip
-  command == 'yes' ? false : true
+  # command = gets.strip
+  gets.strip == 'yes' ? false : true
 end
+
+
+
